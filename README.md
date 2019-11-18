@@ -10,6 +10,11 @@ npm install -g yo
 npm install -g generator-sap-a-team-haa
 ```
 
+If you git clone this repo, get it to show up in Yeoman by using npm link from the repo directory.
+```
+npm link
+```
+
 Then generate your new project:
 
 ```bash
