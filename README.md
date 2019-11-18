@@ -15,6 +15,10 @@ If you git clone this repo, get it to show up in Yeoman by using npm link from t
 npm link
 sudo npm link
 ```
+Yeoman looks for generators installed in:
+```
+cd /usr/local/lib/node_modules/
+```
 
 Then generate your new project:
 
