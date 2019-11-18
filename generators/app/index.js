@@ -58,16 +58,10 @@ module.exports = class extends Generator {
         name: "name",
         message: "Your project name",
         default: this.appname // Default to current folder name
-      },
-      {
-        type: "confirm",
-        name: "cool",
-        message: "Would you like to enable the Cool feature?"
       }
     ]);
 
     this.log("app name", this.answers.name);
-    this.log("cool feature", this.answers.cool);
 	  
   }
 
@@ -102,6 +96,8 @@ module.exports = class extends Generator {
     });
   */
 
+    this.composeWith(require.resolve('../haa-module'));
+    this.composeWith(require.resolve('../haa-router'));
   }
 
   writing() {
