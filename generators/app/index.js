@@ -58,7 +58,32 @@ module.exports = class extends Generator {
         name: "name",
         message: "Your project name",
         default: this.appname // Default to current folder name
+      },
+      {
+        type: "input",
+        name: "haa_uaa_res_name",
+        message: "UAA resource name",
+        default: "haa-uaa"
+      },
+      {
+        type: "input",
+        name: "haa_uaa_svc_name",
+        message: "UAA service name",
+        default: "HAA-UAA"
+      },
+      {
+        type: "input",
+        name: "haa_hdi_res_name",
+        message: "HDI resource name",
+        default: "haa-hdi"
+      },
+      {
+        type: "input",
+        name: "haa_hdi_svc_name",
+        message: "HDI service name",
+        default: "HAA-HDI"
       }
+
     ]);
 
     this.log("app name", this.answers.name);
@@ -96,8 +121,8 @@ module.exports = class extends Generator {
     });
   */
 
-    this.composeWith(require.resolve('../haa-module'));
-    this.composeWith(require.resolve('../haa-router'));
+    //this.composeWith(require.resolve('../haa-router'));
+    //this.composeWith(require.resolve('../haa-module'));
   }
 
   writing() {
@@ -110,7 +135,13 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(this.templatePath('README.md'),this.destinationPath('README.md'),{ uaa_service_name: 'HAA_UAA' });
 
-    this.fs.copyTpl(this.templatePath('mta.yaml'),this.destinationPath('mta.yaml'),{ app_name: this.answers.name });
+    this.fs.copyTpl(this.templatePath('mta.yaml'),this.destinationPath('mta.yaml'),{ 
+	    app_name: this.answers.name, 
+	    haa_uaa_res_name: this.answers.haa_uaa_res_name,
+	    haa_uaa_svc_name: this.answers.haa_uaa_svc_name,
+	    haa_hdi_res_name: this.answers.haa_hdi_res_name,
+	    haa_hdi_svc_name: this.answers.haa_hdi_svc_name
+    });
 
     this.fs.copyTpl(this.templatePath('mta_to_cf.mtaext'),this.destinationPath('mta_to_cf.mtaext'),{ app_name: this.answers.name });
 
@@ -118,16 +149,12 @@ module.exports = class extends Generator {
 		  
   }
 
-
-  method1() {
-    this.log('method 1 just ran');
-  }
-
-  method2() {
-    this.log('method 2 just ran');
-  }
-
   install() {
     // this.installDependencies({ bower: false });
+  }
+  
+  end() {
+    this.composeWith(require.resolve('../haa-module'));
+    //this.composeWith(require.resolve('../haa-router'));
   }
 };
