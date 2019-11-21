@@ -154,7 +154,17 @@ module.exports = class extends Generator {
   }
   
   end() {
-    this.composeWith(require.resolve('../haa-module'));
-    //this.composeWith(require.resolve('../haa-router'));
+    this.composeWith(require.resolve('../haa-module'), { 
+	    app_name: this.answers.name, 
+	    haa_uaa_res_name: this.answers.haa_uaa_res_name,
+	    haa_uaa_svc_name: this.answers.haa_uaa_svc_name,
+	    haa_hdi_res_name: this.answers.haa_hdi_res_name,
+	    haa_hdi_svc_name: this.answers.haa_hdi_svc_name
+    } );
+
+    this.composeWith(require.resolve('../haa-router'), {
+	    app_name: this.answers.name, 
+	    haa_uaa_res_name: this.answers.haa_uaa_res_name
+    } );
   }
 };
