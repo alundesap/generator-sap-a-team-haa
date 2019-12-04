@@ -18,6 +18,13 @@ module.exports = class extends Generator {
   initializing() {
     this.props = {};
     this.answers = {};
+    this.config.defaults({ 
+      "project_name": this.appname,
+      "haa_uaa_res_name": "haa-uaa",
+      "haa_uaa_svc_name": "HAA_UAA",
+      "haa_hdi_res_name": "haa-hdi",
+      "haa_hdi_svc_name": "HAA_HDI"
+    });    
   }
 
   async prompting() {
@@ -55,51 +62,50 @@ module.exports = class extends Generator {
     this.answers = await this.prompt([
       {
         type: "input",
-        name: "name",
+        name: "project_name",
         message: "Your project name",
-        default: this.appname // Default to current folder name
+        default: this.config.get("project_name") // Default to current folder name
       },
       {
         type: "input",
         name: "haa_uaa_res_name",
         message: "UAA resource name",
-        default: "haa-uaa"
+        default: this.config.get("haa_uaa_res_name")
       },
       {
         type: "input",
         name: "haa_uaa_svc_name",
         message: "UAA service name",
-        default: "HAA-UAA"
+        default: this.config.get("haa_uaa_svc_name")
       },
       {
         type: "input",
         name: "haa_hdi_res_name",
         message: "HDI resource name",
-        default: "haa-hdi"
+        default: this.config.get("haa_hdi_res_name")
       },
       {
         type: "input",
         name: "haa_hdi_svc_name",
         message: "HDI service name",
-        default: "HAA-HDI"
+        default: this.config.get("haa_hdi_svc_name")
       }
-
     ]);
 
-    this.log("app name", this.answers.name);
+    this.log("app name", this.answers.project_name);
 	  
   }
 
 
   default() {
-    if (path.basename(this.destinationPath()) !== this.answers.name) {
+    if (path.basename(this.destinationPath()) !== this.answers.project_name) {
       this.log(
         `Your project must be inside a folder named ${
-          this.answers.name
+          this.answers.project_name
         }\nI'll automatically create this folder.`
       );
-      mkdirp(this.answers.name);
-      this.destinationRoot(this.destinationPath(this.answers.name));
+      mkdirp(this.answers.project_name);
+      this.destinationRoot(this.destinationPath(this.answers.project_name));
     }
 
     const readmeTpl = _.template(this.fs.read(this.templatePath('README.md')));
@@ -126,7 +132,13 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    this.config.set("project_name", this.answers.project_name);
+    this.config.set("haa_uaa_res_name", this.answers.haa_uaa_res_name);
+    this.config.set("haa_uaa_svc_name", this.answers.haa_uaa_svc_name);
+    this.config.set("haa_hdi_res_name", this.answers.haa_hdi_res_name);
+    this.config.set("haa_hdi_svc_name", this.answers.haa_hdi_svc_name);
 
+    this.config.save();
     // README.md
     //this.fs.copy(
     //  this.templatePath('README.md'),
@@ -136,14 +148,14 @@ module.exports = class extends Generator {
     this.fs.copyTpl(this.templatePath('README.md'),this.destinationPath('README.md'),{ uaa_service_name: 'HAA_UAA' });
 
     this.fs.copyTpl(this.templatePath('mta.yaml'),this.destinationPath('mta.yaml'),{ 
-	    app_name: this.answers.name, 
+	    app_name: this.answers.project_name, 
 	    haa_uaa_res_name: this.answers.haa_uaa_res_name,
 	    haa_uaa_svc_name: this.answers.haa_uaa_svc_name,
 	    haa_hdi_res_name: this.answers.haa_hdi_res_name,
 	    haa_hdi_svc_name: this.answers.haa_hdi_svc_name
     });
 
-    this.fs.copyTpl(this.templatePath('mta_to_cf.mtaext'),this.destinationPath('mta_to_cf.mtaext'),{ app_name: this.answers.name });
+    this.fs.copyTpl(this.templatePath('mta_to_cf.mtaext'),this.destinationPath('mta_to_cf.mtaext'),{ app_name: this.answers.project_name });
 
     this.fs.copy(this.templatePath('xs-security.json'), this.destinationPath('xs-security.json'));
 		  
@@ -155,16 +167,19 @@ module.exports = class extends Generator {
   
   end() {
     this.composeWith(require.resolve('../haa-module'), { 
-	    app_name: this.answers.name, 
+	    app_name: this.answers.project_name, 
 	    haa_uaa_res_name: this.answers.haa_uaa_res_name,
 	    haa_uaa_svc_name: this.answers.haa_uaa_svc_name,
 	    haa_hdi_res_name: this.answers.haa_hdi_res_name,
 	    haa_hdi_svc_name: this.answers.haa_hdi_svc_name
     } );
 
+
     this.composeWith(require.resolve('../haa-router'), {
-	    app_name: this.answers.name, 
+	    app_name: this.answers.project_name, 
 	    haa_uaa_res_name: this.answers.haa_uaa_res_name
     } );
+
+
   }
 };
