@@ -20,6 +20,17 @@ Yeoman looks for generators installed in:
 cd /usr/local/lib/node_modules/
 ```
 
+For SAP Application Studio (Beta).  Open a new terminal.
+```
+cd ~
+mkdir generators
+cd generators
+git clone https://github.com/alundesap/generator-sap-a-team-haa.git
+npm install -g generator-sap-a-team-haa
+cd ~
+cd projects
+```
+
 Then generate your new project:
 
 ```bash
