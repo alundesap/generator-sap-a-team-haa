@@ -1,0 +1,14 @@
+ID: <%= app_name %>
+_schema-version: '2.0.0'
+version: 0.0.1
+modules:
+resources:
+ - name: <%= haa_uaa_res_name %>
+   type: com.sap.xs.uaa
+   parameters:
+      path: ./xs-security.json
+      service-name: <%= haa_uaa_svc_name %>
+ - name: <%= haa_hdi_res_name %>
+   type: org.cloudfoundry.existing-service
+   parameters:
+      service-name: <%= haa_hdi_svc_name %>

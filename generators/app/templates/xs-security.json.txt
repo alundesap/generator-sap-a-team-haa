@@ -1,0 +1,4 @@
+{
+  "xsappname": "haa-web",
+  "tenant-mode": "dedicated"
+}

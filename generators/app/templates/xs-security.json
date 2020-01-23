@@ -1,0 +1,4 @@
+{
+  "xsappname": "<%= haa_router_name %>",
+  "tenant-mode": "dedicated"
+}
