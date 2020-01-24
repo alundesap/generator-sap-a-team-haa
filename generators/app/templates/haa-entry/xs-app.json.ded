@@ -1,0 +1,19 @@
+{
+	"welcomeFile": "index.html",
+	"authenticationMethod": "route",
+	"routes": [{
+		"source": "^/sap/bc/ina/(.*)$",
+		"destination": "XSAHAA_BACKEND",
+		"httpMethods": ["POST", "GET"],
+		"authenticationType": "xsuaa"
+	}, {
+		"source": "^/sap/bc/ina/(.*)$",
+		"destination": "XSAHAA_BACKEND",
+		"httpMethods": ["OPTIONS"],
+		"authenticationType": "none"
+	}, {
+		"source": "^/(.*)",
+		"localDir": "resources",
+		"authenticationType": "none"
+	}]
+}

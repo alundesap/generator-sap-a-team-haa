@@ -397,14 +397,16 @@ module.exports = class extends Generator {
       }
     );
 
-    this.fs.copyTpl(this.templatePath('xs-security.json'),this.destinationPath('xs-security.json'), 
+    this.fs.copyTpl(this.templatePath('xs-security.json.'+this.answers.ded_shd),this.destinationPath('xs-security.json'), 
       { 
-        "haa_router_name": this.answers.haa_router_name
+        "haa_router_name": this.answers.haa_router_name,
+        "deploy_dnsdomain": this.answers.deploy_dnsdomain,
+        "app_name": this.answers.app_name
       }
     );
 
     this.fs.copy( this.templatePath('haa-entry/package.json'), this.destinationPath(this.answers.haa_router_dir + '/package.json'));
-    this.fs.copy( this.templatePath('haa-entry/xs-app.json'), this.destinationPath(this.answers.haa_router_dir + '/xs-app.json'));
+    this.fs.copy( this.templatePath('haa-entry/xs-app.json.'+this.answers.ded_shd), this.destinationPath(this.answers.haa_router_dir + '/xs-app.json'));
     this.fs.copyTpl(this.templatePath('haa-entry/resources/index.html'),this.destinationPath(this.answers.haa_router_dir + '/resources/index.html'), 
       { 
         "project_name": this.answers.project_name
@@ -472,6 +474,13 @@ module.exports = class extends Generator {
 	    haa_uaa_res_name: this.answers.haa_uaa_res_name
     } );
     */
-
+    // mkdir -p target ; mbt build -p=cf -t=target --mtar=haa-cf.mtar ; cf deploy target/haa-cf.mtar -f
+    this.log("Your INA project is ready.");
+    this.log("Change into your project folder with 'cd "+this.answers.project_name+"'");
+    this.log("Run this command to build and deploy.");
+    this.log("mkdir -p target ; mbt build -p=cf -t=target --mtar=haa-cf.mtar ; cf deploy target/haa-cf.mtar -f");
+    if (this.answers.ded_shd == "shd") {
+      this.log("Be sure to set up role collections and assign them to users.");
+    }
   }
 };

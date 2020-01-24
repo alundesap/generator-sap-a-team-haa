@@ -1,7 +1,30 @@
-cf create-service xsuaa application <%= uaa_service_name %> -c xs-security.json
+DEDEXT
 
-Be sure that an existing service instance with service name hana and plan type hdi-shared with the name <%= service_name %> is already in the <%= space %> space.
+Be sure that an existing service instance with service name hana and plan type hdi-shared with the name <%= haa_hdi_svc_name %> is already in the <%= deploy_space %> space.
 
 ```
-mbt build -p=cf -t=target --mtar=haa-dedext.mtar ; cf deploy target/haa-dedext.mtar -f
+mkdir -p target ; mbt build -p=cf -t=target --mtar=haa-cf.mtar ; cf deploy target/haa-cf.mtar -f
 ```
+
+Substitutions:
+```
+      "project_name": <%= project_name %>
+      "app_name": <%= app_name %>
+
+      "haa_module_name": <%= haa_module_name %>
+      "haa_module_dir": <%= haa_module_dir %>
+
+      "haa_router_name": <%= haa_router_name %>
+      "haa_router_dir": <%= haa_router_dir %>
+
+      "haa_uaa_res_name": <%= haa_uaa_res_name %>
+      "haa_uaa_svc_name": <%= haa_uaa_svc_name %>
+      "haa_hdi_res_name": <%= haa_hdi_res_name %>
+      "haa_hdi_svc_name": <%= haa_hdi_svc_name %>
+      
+      "sac_host":  <%= sac_host %>
+      "deploy_landscape": <%= deploy_landscape %>
+      "deploy_dnsdomain": <%= deploy_dnsdomain %>
+      "subacct_subdomain": <%= subacct_subdomain %>
+      "deploy_space": <%= deploy_space %>
+``` 

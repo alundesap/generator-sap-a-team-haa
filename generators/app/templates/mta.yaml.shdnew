@@ -1,0 +1,85 @@
+ID: <%= app_name %>
+_schema-version: '2.0.0'
+version: 0.0.1
+
+modules:
+
+ - name: <%= haa_module_name %>
+   type: java
+   path: <%= haa_module_dir %>
+   parameters:
+     memory: 800M
+     buildpack: sap_java_buildpack
+     domain: <%= deploy_dnsdomain %>
+   properties:
+     TARGET_RUNTIME: tomee
+     SAP_JWT_TRUST_ACL: '[{"clientid":"*", "identityzone": "*"}]'
+     JBP_CONFIG_RESOURCE_CONFIGURATION: "['tomee/webapps/ROOT/WEB-INF/resources.xml': {'xsahaa-hdi-container':'<%= haa_hdi_svc_name %>'}]"
+   provides:
+    - name: java-xsahaa
+      properties:
+        url: ${default-url}
+   requires:
+    - name: <%= haa_uaa_res_name %>
+    - name: <%= haa_hdi_res_name %>
+
+ - name: <%= haa_router_name %>
+   type: nodejs
+   path: <%= haa_router_dir %>
+   parameters:
+     memory: 128M
+     buildpack: nodejs_buildpack
+     domain: <%= deploy_dnsdomain %>
+   requires:
+    - name: <%= haa_uaa_res_name %>
+    - name: java-xsahaa
+      group: destinations
+      properties:
+        name: XSAHAA_BACKEND
+        url: ~{url}
+        forwardAuthToken: true
+        timeout: 600000
+   properties:
+     CORS: [
+              {
+                "uriPattern": "^/sap/bc/ina/(.*)$", 
+                "allowedOrigin": [{"host":"<%= sac_host %>", "protocol":"https"}
+            ], 
+            "allowedMethods": ["GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE"],
+            "allowedHeaders": ["Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization", "X-Sap-Cid", "X-Csrf-Token", "Accept-Language"],
+            "exposeHeaders": ["Accept", "Authorization", "X-Requested-With", "X-Sap-Cid", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "X-Csrf-Token", "Content-Type"]
+          }
+        ]
+
+     INCOMING_CONNECTION_TIMEOUT: 600000
+     # Note:  For Multi-tenant projects, you will want to use a custom domain so that subscriber's URLs
+     #        can be handled properly.  The TENANT_HOST_PATTERN will have to change to accomodate this.
+     #        Also, a module in your project must provide the subscription/unsubscription endpoints.
+     #
+     TENANT_HOST_PATTERN: '^(.*)-<%= deploy_space %>-<%= haa_router_name %>.<%= deploy_dnsdomain %>'
+
+ - name: <%= haa_db_name %>
+   type: hdb
+   path: <%= haa_db_dir %>
+   parameters:
+     memory: 512M
+     disk-quota: 512M
+     domain: <%= deploy_dnsdomain %>
+   requires:
+     - name: <%= haa_hdi_res_name %>
+
+
+
+resources:
+ - name: <%= haa_uaa_res_name %>
+   type: com.sap.xs.uaa
+   parameters:
+      service-name: <%= haa_uaa_svc_name %>
+      path: ./xs-security.json
+ - name: <%= haa_hdi_res_name %>
+   type: com.sap.xs.hdi-container
+   parameters:
+      service-name: <%= haa_hdi_svc_name %>
+      config:
+         schema: <%= db_schema_name %>
+
