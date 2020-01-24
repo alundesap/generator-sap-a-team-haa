@@ -75,8 +75,8 @@ module.exports = class extends Generator {
       "sac_host": "ateam-isveng.us10.sapanalytics.cloud",
       "deploy_landscape": "us10",
       "deploy_dnsdomain": "cfapps.<landscape>.hana.ondemand.com",
-      "subacct_subdomain": "conciletime",
-      "deploy_space": "dev"
+      "subacct_subdomain": "your_subdomain",
+      "deploy_space": "your_space"
     });    
   }
 
@@ -478,9 +478,18 @@ module.exports = class extends Generator {
     this.log("Your INA project is ready.");
     this.log("Change into your project folder with 'cd "+this.answers.project_name+"'");
     this.log("Run this command to build and deploy.");
-    this.log("mkdir -p target ; mbt build -p=cf -t=target --mtar=haa-cf.mtar ; cf deploy target/haa-cf.mtar -f");
+    var build_deploy_cmd = "mkdir -p target ; mbt build -p=cf -t=target --mtar=haa-cf.mtar ; cf deploy target/haa-cf.mtar -f";
+    if (this.answers.ded_shd == "shd") {
+      this.log("mkdir -p target ; mbt build -p=cf -t=target --mtar=haa-cf.mtar ; cf deploy target/haa-cf.mtar -f ; echo 'DO NOT forget to set up Role Collections!'");
+    }
+    else {
+      this.log("mkdir -p target ; mbt build -p=cf -t=target --mtar=haa-cf.mtar ; cf deploy target/haa-cf.mtar -f");
+    }
     if (this.answers.ded_shd == "shd") {
       this.log("Be sure to set up role collections and assign them to users.");
+    }
+    else {
+      
     }
   }
 };
