@@ -189,6 +189,7 @@ module.exports = class extends Generator {
         when: check_new,
         type: "input",
         name: "haa_hdi_svc_name",
+        prefix: "Note, must match HDI resource name due to bug in WebIDE-FS calculation view editor.\n",
         message: "HDI service name.",
         default: this.config.get("haa_hdi_svc_name")
       },
@@ -218,6 +219,7 @@ module.exports = class extends Generator {
         when: check_new,
         type: "input",
         name: "db_schema_name",
+        prefix: "Leave this blank if you want the system to generate the schema name.\n",
         message: "DB Schema Name.",
         default: this.config.get("db_schema_name")
       },
@@ -230,12 +232,13 @@ module.exports = class extends Generator {
       {
         type: "list",
         name: "deploy_landscape",
+        prefix: "Make sure that you are logged into the Cloud Foundry landscape before deploying.\n",
         message: "SAP Cloud Landscape.",
         choices: [
-          {"name": "US East (VA) AWS = us10", "value": "us10"},
+          {"name": "US East (VA) AWS + trial = us10", "value": "us10"},
           {"name": "US West (WA) Azu = us20", "value": "us20"},
           {"name": "US Central (IA) GCP = us30", "value": "us30"},
-          {"name": "Europe (Frankfurt) AWS = eu10", "value": "eu10"},
+          {"name": "Europe (Frankfurt) AWS + trial = eu10", "value": "eu10"},
           {"name": "Europe (Netherlands) Azu = eu20", "value": "eu20"},
           {"name": "Japan (Tokyo) AWS = jp10", "value": "jp10"},
           {"name": "Japan (Tokyo) Azu = jp20", "value": "jp20"},
@@ -261,6 +264,7 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "deploy_space",
+        prefix: "Make sure a HANA As A Service(HaaS) instance is available(or permitted) in this space before deploying.\n",
         message: "CloudFoundry space you're deploying into.",
         default: this.config.get("deploy_space")
       }
@@ -342,6 +346,8 @@ module.exports = class extends Generator {
     //  this.templatePath('README.md.'+this.answers.ded_shd+this.answers.new_ext),
     //  this.destinationPath('README.md')
     // );
+
+    this.fs.copy(this.templatePath('.gitignore'), this.destinationPath('.gitignore'));
 
     this.fs.copyTpl(this.templatePath('README.md.'+this.answers.ded_shd+this.answers.new_ext),this.destinationPath('README.md'),
       { 
@@ -438,6 +444,7 @@ module.exports = class extends Generator {
     this.fs.copy( this.templatePath('haa-db/src/data/temp.csv'), this.destinationPath(this.answers.haa_db_dir + '/src/data/temp.csv'));
     this.fs.copy( this.templatePath('haa-db/src/data/temp.hdbtabledata'), this.destinationPath(this.answers.haa_db_dir + '/src/data/temp.hdbtabledata'));
     this.fs.copy( this.templatePath('haa-db/src/data/tempId.hdbsequence'), this.destinationPath(this.answers.haa_db_dir + '/src/data/tempId.hdbsequence'));
+    this.fs.copy( this.templatePath('haa-db/src/views/temps.hdbcalculationview'), this.destinationPath(this.answers.haa_db_dir + '/src/views/temps.hdbcalculationview'));
 
     /*
     this.fs.copyTpl(this.templatePath('mta.yaml'),this.destinationPath('mta.yaml'),{ 
