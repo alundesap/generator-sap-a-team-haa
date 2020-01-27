@@ -33,7 +33,7 @@ function check_ext(so_far) {
 
 function get_landscape_domain(so_far) { 
   //return JSON.stringify(so_far);
-  var retstr = "cfapps." + so_far.deploy_landscape + ".hanna.ondemand.com";
+  var retstr = "cfapps." + so_far.deploy_landscape + ".hana.ondemand.com";
   //var existing_default = so_far.defaults.deploy_dnsdomain;
   //if (existing_default.substr(0,6) != "cfapps") {
   //  retstr = existing_default;
