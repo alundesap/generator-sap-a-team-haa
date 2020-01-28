@@ -37,7 +37,7 @@ Then generate your new project:
 ```bash
 yo sap-a-team-haa
 ```
-
+You'll be greeted with the yeoman project prompt.  
 ```
      _-----_     ╭──────────────────────────╮
     |       |    │  Welcome to the awesome  │
@@ -52,61 +52,55 @@ yo sap-a-team-haa
 ? Enter your project folder name (will be created if necessary). (git) 
 
 ```
-Blah
+Enter a new folder name where your project will be generated.
 ```
 ? Enter your project folder name (will be created if necessary). my_haa_project
 ```
-Blah
+Now give your project application a name.
 ```
 ? Enter your project application name. myhaa
 ```
-Blah
+The next set of prompts relate to a java module that will provide the actual InA interface.
+There seem to be a lot of opportunities to to specify various things.  This is so that you can use a neomenclature that matches an existing project and therefore make it easier to merge this project with your existing one.  If you're just trying things out then you can safely accept the defaults provided.
 ```
 ? HAA module name(will provide the INA interface). (haa-ina) 
-
 ? HAA module path haa-java
+```
+The next module is a NodeJS application router.  You can inspect the project mta.yaml file to see how it's used and adapt it to your project.
+```
 ? HAA router name(the application router). haa-web
 ? HAA router path haa-entry
 ```
-Blah
+You can pick one of two authorization models.  Dedicated is simpler and Shared allows for creation of roles.
 ```
 ? Pick an authorization model Dedicated(Stand-Alone) or Shared(Multi-Tenant). (Use arrow keys)
-❯ Dedicated 
+❯Dedicated 
   Shared 
-
-? Pick an authorization model Dedicated(Stand-Alone) or Shared(Multi-Tenant). Dedicated
 ? UAA resource name haa-uaa
 ? UAA service name HAA_UAA
 ```
-Blah
+Your project can access an existing HDI container or the generator can provide a new sample one for you.
 ```
 ? Do you want to include a new(sample) HDI container or use an existing HDI container? (Use arro
 w keys)
 ❯ New HDI Container 
   Existing HDI Container 
-
-? Do you want to include a new(sample) HDI container or use an existing HDI container? New HDI C
-ontainer
 ? HDI resource name haa-hdi
 Note, must match HDI resource name due to bug in WebIDE-FS calculation view editor.
  HDI service name. HAA_HDI
 ? DB Module Name. haa-hdb
 ? DB Module path. haa-db
 ```
-Blah
+It's important to understand that if you specify a schema name, then you may run into troubles when you deploy your project in multiple spaces using the same HANA instance.  However, specifying a schema name makes it easier to integrate with external systems.  By leaving the schema name blank, you are asking the deployer to create a unique one whenever necessary.
 ```
 Leave this blank if you want the system to generate the schema name.
  DB Schema Name. (HAADB) 
-
-
 ```
-Blah
+The presumption is that you will be using this project to facilitate a HANA Live Connection from within SAP Analytic Cloud(SAC).  Enter your account name so that the CORS settings are correct.
 ```
-? Your SAP Analytic Cloud Hostname (ateam-isveng.us10.sapanalytics.cloud) 
-
 ? Your SAP Analytic Cloud Hostname ateam-isveng.us10.sapanalytics.cloud
 ```
-Blah
+Select the SCP landscape where you will be deploying this project.
 ```
 Make sure that you are logged into the Cloud Foundry landscape before deploying.
  SAP Cloud Landscape. (Use arrow keys)
@@ -119,12 +113,13 @@ Make sure that you are logged into the Cloud Foundry landscape before deploying.
   Japan (Tokyo) Azu = jp20 
 
 ```
-Blah
-$ cf domains
+While each SCP landscape comes with it's own default domain, you can also use your own if it's been set up ahead of time in th e org and space that you will using.  You can check for this with the command...
+```
+cf domains
+```
+Otherwise, just accept the default for the landscape.
 ```
 ? DNS Domain provisioned in your space. (cfapps.us10.hana.ondemand.com) 
-
-
 ```
 Blah
 ![Image of Screen](img/C6C9C5D8-242D-4526-95F0-A6AC6850B4D1.png)
