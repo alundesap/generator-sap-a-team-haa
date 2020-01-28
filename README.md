@@ -56,4 +56,4 @@ MIT © [Andrew Lunde](https://github.com/alundesap)
 [daviddm-image]: https://david-dm.org/alundesap/generator-sap-a-team-haa.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/alundesap/generator-sap-a-team-haa
 
-![Image of Screen](https://octodex.github.com/images/yaktocat.png)
+![Image of Screen](https://github.com/alundesap/generator-sap-a-team-haa/blob/master/img/C6C9C5D8-242D-4526-95F0-A6AC6850B4D1.png)
