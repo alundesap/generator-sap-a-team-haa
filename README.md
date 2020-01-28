@@ -120,12 +120,15 @@ Make sure that you are logged into the Cloud Foundry landscape before deploying.
 
 ```
 Blah
+$ cf domains
 ```
 ? DNS Domain provisioned in your space. (cfapps.us10.hana.ondemand.com) 
 
 
 ```
 Blah
+![Image of Screen](img/C6C9C5D8-242D-4526-95F0-A6AC6850B4D1.png)
+
 ```
 ? Subaccount's subdomain. mysubdomain
 Make sure a HANA As A Service(HaaS) instance is available(or permitted) in this space before dep
@@ -149,24 +152,7 @@ I'll automatically create this folder.  Change into it with "cd my_haa_project"
    create README.md
    create mta.yaml
    create xs-security.json
-   create haa-entry/package.json
-   create haa-entry/xs-app.json
-   create haa-entry/resources/index.html
-   create haa-java/pom.xml
-   create haa-java/target/java-xsahaa.war
-   create haa-db/package.json
-   create haa-db/src/.hdinamespace
-   create haa-db/src/.hdiconfig
-   create haa-db/src/db_grant_role.hdbprocedure
-   create haa-db/src/defaults/.hdinamespace
-   create haa-db/src/defaults/default_access_role.hdbrole
-   create haa-db/src/roles/.hdinamespace
-   create haa-db/src/roles/myhaa_admin.hdbrole
-   create haa-db/src/data/.hdinamespace
-   create haa-db/src/data/sensors.hdbcds
-   create haa-db/src/data/sys.hdbsynonym
-   create haa-db/src/data/temp.csv
-   create haa-db/src/data/temp.hdbtabledata
+...
    create haa-db/src/data/tempId.hdbsequence
    create haa-db/src/views/temps.hdbcalculationview
 Your INA project is ready.
