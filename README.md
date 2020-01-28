@@ -41,6 +41,10 @@ yo sap-a-team-haa
 ![Image of Screen](https://github.com/alundesap/generator-sap-a-team-haa/blob/master/img/C6C9C5D8-242D-4526-95F0-A6AC6850B4D1.png)
 
 
+![Image of Screen](img/C6C9C5D8-242D-4526-95F0-A6AC6850B4D1.png)
+
+
+
 ## License
 
 MIT © [Andrew Lunde](https://github.com/alundesap)
