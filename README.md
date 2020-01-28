@@ -1,4 +1,5 @@
-# generator-sap-a-team-haa [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# generator-sap-a-team-haa 
+
 > SAP A-Team HANA Analytics Adapter Project Generator
 
 ## Installation
